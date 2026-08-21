@@ -1,0 +1,97 @@
+# SQL — ściągawka
+
+## 0. Typy danych
+
+| Typ | Znaczenie |
+|---|---|
+| `TEXT` | tekst |
+| `INTEGER` | liczba całkowita |
+| `REAL` / `FLOAT` | liczba z przecinkiem |
+| `BOOLEAN` | TRUE / FALSE |
+| `DATE` | data |
+| `DATETIME` | data i czas |
+
+---
+
+## 1. Tworzenie tabeli
+
+```sql
+CREATE TABLE nazwa_tabeli ( nazwa_kolumny typ_danych, nazwa_kolumny typ_danych, ... );
+```
+tworzy nową tabelę
+
+```sql
+id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+```
+klucz główny z automatycznie nadawanym numerem
+
+---
+
+## 2. Dodawanie danych
+
+```sql
+INSERT INTO nazwa_tabeli VALUES (..., ..., ...);
+```
+dodaje nowy rekord (wartości dla wszystkich kolumn, po kolei)
+
+```sql
+INSERT INTO nazwa_tabeli (kolumna1, kolumna2) VALUES (..., ...);
+```
+dodaje rekord, podając wartości tylko dla wybranych kolumn
+
+---
+
+## 3. Wyświetlanie danych
+
+```sql
+SELECT * FROM nazwa_tabeli;
+```
+wyświetla całą tabelę
+
+```sql
+SELECT nazwa_kolumny FROM nazwa_tabeli;
+```
+wyświetla wybraną kolumnę
+
+```sql
+SELECT * FROM nazwa_tabeli WHERE wartość > 2000 ORDER BY nazwa_kolumny;
+```
+wyświetla rekordy spełniające warunek i sortuje je rosnąco (malejąco → `ORDER BY nazwa_kolumny DESC`)
+
+---
+
+## 4. Grupowanie
+
+```sql
+SELECT nazwa_kolumny, inna_nazwa_kolumny FROM nazwa_tabeli GROUP BY nazwa_kolumny;
+```
+grupuje wiersze po wartościach `nazwa_kolumny` — używa się głównie z funkcjami typu `SUM`, `COUNT` (kolejność wyniku ustawia się przez `ORDER BY`, malejąco → `DESC`)
+
+---
+
+## 5. Funkcje agregujące
+
+```sql
+SELECT SUM(nazwa_kolumny) FROM nazwa_tabeli;
+```
+sumuje wszystkie wartości z danej kolumny
+
+```sql
+SELECT COUNT(nazwa_kolumny) FROM nazwa_tabeli;
+```
+liczy liczbę wierszy (rekordów)
+
+```sql
+SELECT AVG(nazwa_kolumny) FROM nazwa_tabeli;
+```
+liczy średnią wartość z danej kolumny
+
+```sql
+SELECT MIN(nazwa_kolumny) FROM nazwa_tabeli;
+```
+zwraca najmniejszą wartość z danej kolumny
+
+```sql
+SELECT MAX(nazwa_kolumny) FROM nazwa_tabeli;
+```
+zwraca największą wartość z danej kolumny
