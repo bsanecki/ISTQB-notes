@@ -206,3 +206,60 @@ np.
 SELECT * FROM songs WHERE title LIKE 'A%';
 ```
 zwraca tytuły zaczynające się na "A"
+
+---
+
+## 11. JOIN
+
+```sql
+SELECT * FROM student_grades;
+```
+zwykłe zapytanie z jednej tabeli — punkt wyjścia do porównania z poniższymi
+
+**Cross join** — łączy każdy wiersz z jednej tabeli z każdym wierszem drugiej (wszystkie możliwe kombinacje):
+```sql
+SELECT * FROM student_grades, students;
+```
+
+**Implicit inner join** — cross join + warunek w `WHERE` łączący wiersze po wspólnej kolumnie:
+```sql
+SELECT * FROM student_grades, students
+    WHERE student_grades.student_id = students.id;
+```
+
+**Explicit inner join (JOIN ... ON)** — czytelniejsza wersja tego samego, warunek łączenia w `ON` zamiast w `WHERE`:
+```sql
+SELECT students.first_name, students.last_name, students.email, student_grades.test, student_grades.grade
+    FROM students
+    JOIN student_grades
+    ON students.id = student_grades.student_id
+    WHERE grade > 90;
+```
+> `JOIN` (bez dopisku) domyślnie oznacza `INNER JOIN` — pokazuje tylko wiersze, dla których znaleziono dopasowanie w obu tabelach
+
+**Outer join (LEFT OUTER JOIN)** — pokazuje wszystkie wiersze z lewej tabeli, nawet jeśli nie mają dopasowania w drugiej (wtedy puste kolumny = NULL):
+```sql
+SELECT students.first_name, students.last_name, student_projects.title
+    FROM students
+    LEFT OUTER JOIN student_projects
+    ON students.id = student_projects.student_id;
+```
+
+**Self join** — tabela łączona sama ze sobą (przydatne, gdy jedna kolumna odwołuje się do innego wiersza tej samej tabeli, np. `buddy_id` wskazujący na innego ucznia). Trzeba nadać alias, żeby SQL rozróżnił "dwie kopie" tabeli:
+```sql
+SELECT id, first_name, last_name, buddy_id FROM students;
+
+SELECT students.first_name, students.last_name, buddies.email AS buddy_email
+    FROM students
+    JOIN students buddies
+    ON students.buddy_id = buddies.id;
+```
+
+**Kilka JOIN-ów naraz** — można łączyć więcej niż dwie tabele, dodając kolejne `JOIN ... ON` (tu z aliasami `a` i `b` dla dwóch różnych wierszy tej samej tabeli):
+```sql
+SELECT a.title, b.title FROM project_pairs
+    JOIN student_projects a
+    ON project_pairs.project1_id = a.id
+    JOIN student_projects b
+    ON project_pairs.project2_id = b.id;
+```
