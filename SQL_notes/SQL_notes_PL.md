@@ -21,7 +21,7 @@ CREATE TABLE nazwa_tabeli ( nazwa_kolumny typ_danych, nazwa_kolumny typ_danych, 
 tworzy nową tabelę
 
 ```sql
-id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+id INTEGER PRIMARY KEY AUTOINCREMENT
 ```
 klucz główny z automatycznie nadawanym numerem
 
@@ -191,3 +191,18 @@ GROUP BY letter_grade;
 ```
 
 ![sql_screen_5](screens/sql_screen_5.png)
+
+---
+
+## 10. LIKE
+
+```sql
+SELECT * FROM nazwa_tabeli WHERE nazwa_kolumny LIKE 'wzorzec%';
+```
+wyszukuje wartości pasujące do wzorca tekstowego — `%` oznacza dowolną liczbę dowolnych znaków, `_` oznacza dokładnie jeden dowolny znak
+
+np.
+```sql
+SELECT * FROM songs WHERE title LIKE 'A%';
+```
+zwraca tytuły zaczynające się na "A"
