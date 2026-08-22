@@ -1,4 +1,4 @@
-# SQL — Cheat Sheet
+# SQL Notes 
 
 ## 0. Data Types
 
