@@ -1,4 +1,4 @@
-# SQL — ściągawka
+# SQL notes
 
 ## 0. Typy danych
 
